@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fases de Acumulación de Wyckoff</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #F8F9FA;
+            color: #2F4858;
+            position: relative;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 {
+            font-family: 'Merriweather', serif;
+        }
+
+        @keyframes slideWatermark {
+            0% { transform: translate(-50%, -50%) translateX(-50%); }
+            100% { transform: translate(-50%, -50%) translateX(50%); }
+        }
+
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            color: rgba(255, 215, 0, 0.35);
+            z-index: -1;
+            user-select: none;
+            pointer-events: none;
+            white-space: nowrap;
+            animation: slideWatermark 30s linear infinite alternate;
+        }
+        .contact-section {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .contact-section a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .contact-section a:hover {
+            color: #00A0B0;
+        }
+        .contact-section a i {
+            font-size: 1.5rem;
+            margin-right: 8px;
+        }
+        .fa-envelope {
+            color: #D44638;
+        }
+        .fa-whatsapp {
+            color: #25D366;
+        }
+        .fa-youtube {
+            color: #FF0000;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8" oncontextmenu="return false;">
+    
+    <div class="contact-section">
+        <a href="mailto:polaristubrujula@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i> polaristubrujula@gmail.com</a>
+        <a href="https://wa.me/573148119434" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i> +57 314 8119434</a>
+        <a href="https://www.youtube.com/@PolarisTuBrújula" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i> @Polaris Tu Brújula</a>
+    </div>
+
+    <div class="watermark">
+        POLARIS TU BRÚJULA
+    </div>
+
+    <div class="container mx-auto max-w-4xl bg-white rounded-lg shadow-lg p-6">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-black text-[#00A0B0] mb-2">Fases de Acumulación</h1>
+            <p class="text-lg text-gray-600">Una guía paso a paso para entender la entrada de los grandes operadores.</p>
+        </header>
+
+        <section class="mb-8 text-center md:text-left">
+            <h2 id="phase-title" class="text-2xl font-bold mb-4 text-[#EB6841]">Fase Inicial</h2>
+            <p id="phase-description" class="text-base leading-relaxed text-gray-700">Explora cada fase de la acumulación de Wyckoff. Utiliza el botón para avanzar.</p>
+        </section>
+
+        <div class="flex flex-col md:flex-row gap-6 mb-8">
+            <div class="relative w-full md:w-2/3 h-[400px] md:h-[500px] bg-gray-100 rounded-lg shadow-inner">
+                <canvas id="priceChart" class="w-full h-full"></canvas>
+            </div>
+            <div class="w-full md:w-1/3 flex flex-col items-center md:items-start justify-center">
+                <button id="nextBtn" class="bg-[#00A0B0] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#008c9e] transition-colors duration-200">Siguiente Paso</button>
+            </div>
+        </div>
+
+        <section class="mt-8">
+            <h3 class="text-xl font-bold mb-2">Conceptos Clave</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm leading-relaxed">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-[#00A0B0] mb-1">El Clímax de Venta (SC)</h4>
+                    <p>Un movimiento a la baja que alcanza su punto máximo con un volumen de pánico. Es la primera señal de que la oferta está siendo absorbida por los operadores profesionales.</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-[#EB6841] mb-1">El "Spring"</h4>
+                    <p>Una "trampa de oso" o falsa ruptura a la baja del rango de acumulación. Elimina a los últimos vendedores débiles antes de que el precio suba.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="mt-8 text-center text-xs text-gray-500">
+        © Polaris Tu Brújula
+    </footer>
+
+    <script>
+        // Protección del código: Deshabilita F12 y Ctrl+Shift+I
+        document.onkeydown = function(e) {
+            if(e.keyCode == 123) { // F12
+                return false;
+            }
+            if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
+                return false;
+            }
+        }
+
+        const canvas = document.getElementById('priceChart');
+        const ctx = canvas.getContext('2d');
+        const nextBtn = document.getElementById('nextBtn');
+        const phaseTitle = document.getElementById('phase-title');
+        const phaseDescription = document.getElementById('phase-description');
+
+        let currentStep = 0;
+        const steps = [
+            {
+                title: 'Fase A: El Clímax de Venta (SC)',
+                description: 'El mercado está en una fuerte tendencia bajista. De repente, una gran ola de pánico genera un volumen de negociación excepcionalmente alto, marcando el final de la caída y el inicio de una posible reversión. La oferta de los vendedores es absorbida por los compradores institucionales.',
+                data: [
+                    {x: 0, y: 100, volume: 10}, {x: 1, y: 90, volume: 15}, {x: 2, y: 80, volume: 20}, {x: 3, y: 70, volume: 30}, {x: 4, y: 65, volume: 80, label: "SC"},
+                    {x: 5, y: 72, volume: 50, label: "AR"}, {x: 6, y: 68, volume: 20, label: "ST"}
+                ],
+                phaseLabel: {text: "Fase A", x: 4, y: 90}
+            },
+            {
+                title: 'Fase B: Construyendo la Causa',
+                description: 'El precio se mueve en un rango lateral. Los grandes operadores continúan acumulando sigilosamente, absorbiendo la oferta restante. En esta fase, los tests secundarios (ST) son comunes y el volumen se reduce.',
+                data: [
+                    {x: 0, y: 100, volume: 10}, {x: 1, y: 90, volume: 15}, {x: 2, y: 80, volume: 20}, {x: 3, y: 70, volume: 30}, {x: 4, y: 65, volume: 80, label: "SC"},
+                    {x: 5, y: 72, volume: 50, label: "AR"}, {x: 6, y: 68, volume: 20, label: "ST"}, {x: 7, y: 75, volume: 10}, {x: 8, y: 69, volume: 12},
+                    {x: 9, y: 71, volume: 8}, {x: 10, y: 67, volume: 15}, {x: 11, y: 74, volume: 9}
+                ],
+                phaseLabel: {text: "Fase B", x: 9, y: 90}
+            },
+            {
+                title: 'Fase C: El "Spring" (La Trampa)',
+                description: 'El evento más crucial de la acumulación. El precio cae por debajo del rango de trading para una última "trampa de oso". Esta maniobra elimina a los últimos vendedores débiles, lo que permite a los grandes operadores acumular las últimas posiciones antes del movimiento al alza.',
+                data: [
+                    {x: 0, y: 100, volume: 10}, {x: 1, y: 90, volume: 15}, {x: 2, y: 80, volume: 20}, {x: 3, y: 70, volume: 30}, {x: 4, y: 65, volume: 80, label: "SC"},
+                    {x: 5, y: 72, volume: 50, label: "AR"}, {x: 6, y: 68, volume: 20, label: "ST"}, {x: 7, y: 75, volume: 10}, {x: 8, y: 69, volume: 12},
+                    {x: 9, y: 71, volume: 8}, {x: 10, y: 67, volume: 15}, {x: 11, y: 74, volume: 9},
+                    {x: 12, y: 64, volume: 70, label: "Spring"}, {x: 13, y: 80, volume: 60, label: "SOS"}
+                ],
+                phaseLabel: {text: "Fase C", x: 12, y: 90}
+            },
+            {
+                title: 'Fase D: Señal de Fuerza (SOS)',
+                description: 'La evidencia de que la acumulación está completa. El precio sube con fuerza y volumen, superando los niveles de resistencia del rango. Esto es una "Señal de Fuerza" (SOS) y confirma que la oferta ha sido absorbida por completo.',
+                data: [
+                    {x: 0, y: 100, volume: 10}, {x: 1, y: 90, volume: 15}, {x: 2, y: 80, volume: 20}, {x: 3, y: 70, volume: 30}, {x: 4, y: 65, volume: 80, label: "SC"},
+                    {x: 5, y: 72, volume: 50, label: "AR"}, {x: 6, y: 68, volume: 20, label: "ST"}, {x: 7, y: 75, volume: 10}, {x: 8, y: 69, volume: 12},
+                    {x: 9, y: 71, volume: 8}, {x: 10, y: 67, volume: 15}, {x: 11, y: 74, volume: 9},
+                    {x: 12, y: 64, volume: 70, label: "Spring"}, {x: 13, y: 80, volume: 60, label: "SOS"},
+                    {x: 14, y: 78, volume: 30, label: "LPS"}, {x: 15, y: 85, volume: 40}
+                ],
+                phaseLabel: {text: "Fase D", x: 14, y: 90}
+            },
+            {
+                title: 'Fase E: La Tendencia Alcista',
+                description: 'El precio se libera del rango de acumulación y comienza su movimiento al alza. Esta es la fase de "markup" donde la demanda domina y el precio se mueve con fluidez hacia arriba.',
+                data: [
+                    {x: 0, y: 100, volume: 10}, {x: 1, y: 90, volume: 15}, {x: 2, y: 80, volume: 20}, {x: 3, y: 70, volume: 30}, {x: 4, y: 65, volume: 80, label: "SC"},
+                    {x: 5, y: 72, volume: 50, label: "AR"}, {x: 6, y: 68, volume: 20, label: "ST"}, {x: 7, y: 75, volume: 10}, {x: 8, y: 69, volume: 12},
+                    {x: 9, y: 71, volume: 8}, {x: 10, y: 67, volume: 15}, {x: 11, y: 74, volume: 9},
+                    {x: 12, y: 64, volume: 70, label: "Spring"}, {x: 13, y: 80, volume: 60, label: "SOS"},
+                    {x: 14, y: 78, volume: 30, label: "LPS"}, {x: 15, y: 85, volume: 40},
+                    {x: 16, y: 90, volume: 45}, {x: 17, y: 95, volume: 50}, {x: 18, y: 102, volume: 60}
+                ],
+                phaseLabel: {text: "Fase E", x: 17, y: 90}
+            }
+        ];
+
+        const phaseColors = {
+            "Fase A": '#EB6841',
+            "Fase B": '#EDC951',
+            "Fase C": '#00A0B0',
+            "Fase D": '#00A0B0',
+            "Fase E": '#00A0B0'
+        };
+
+        function drawCharts(data, phaseLabel, phaseColor) {
+            const width = canvas.width;
+            const height = canvas.height;
+            const priceChartHeight = height * 0.7;
+            const volumeChartHeight = height * 0.3;
+            ctx.clearRect(0, 0, width, height);
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#00A0B0';
+            ctx.lineWidth = 2;
+            const xStep = width / (steps[steps.length - 1].data.length);
+            const minY = 60;
+            const maxY = 105;
+            const yRange = maxY - minY;
+
+            if (data.length > 0) {
+                ctx.moveTo(data[0].x * xStep, priceChartHeight - (data[0].y - minY) / yRange * priceChartHeight);
+            }
+            data.forEach((point, i) => {
+                const x = point.x * xStep;
+                const y = priceChartHeight - (point.y - minY) / yRange * priceChartHeight;
+                ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            ctx.setLineDash([5, 5]);
+            ctx.strokeStyle = '#4A5568';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            const upperRangeY = priceChartHeight - (75 - minY) / yRange * priceChartHeight;
+            const lowerRangeY = priceChartHeight - (67 - minY) / yRange * priceChartHeight;
+            ctx.moveTo(0, upperRangeY);
+            ctx.lineTo(width, upperRangeY);
+            ctx.moveTo(0, lowerRangeY);
+            ctx.lineTo(width, lowerRangeY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            data.forEach((point) => {
+                if (point.label) {
+                    const x = point.x * xStep;
+                    const y = priceChartHeight - (point.y - minY) / yRange * priceChartHeight;
+                    ctx.fillStyle = '#2F4858';
+                    ctx.font = '12px "Lato", sans-serif';
+                    ctx.fillText(point.label, x + 5, y - 5);
+                }
+            });
+
+            ctx.fillStyle = phaseColor;
+            ctx.font = '24px "Merriweather", serif';
+            ctx.textAlign = 'center';
+            const phaseX = phaseLabel.x * xStep;
+            const phaseY = priceChartHeight - (phaseLabel.y - minY) / yRange * priceChartHeight;
+            ctx.fillText(phaseLabel.text, phaseX, phaseY);
+
+            const maxVolume = 80;
+            const volumeBarWidth = xStep * 0.8;
+            data.forEach((point, i) => {
+                const x = point.x * xStep - volumeBarWidth / 2;
+                const y = priceChartHeight + volumeChartHeight - (point.volume / maxVolume * volumeChartHeight * 0.9);
+                const height = (point.volume / maxVolume * volumeChartHeight * 0.9);
+                
+                if (i > 0 && data[i].y > data[i - 1].y) {
+                    ctx.fillStyle = '#00A0B0';
+                } else {
+                    ctx.fillStyle = '#EB6841';
+                }
+                ctx.fillRect(x, y, volumeBarWidth, height);
+            });
+        }
+
+        function updateStep() {
+            if (currentStep < steps.length) {
+                const step = steps[currentStep];
+                phaseTitle.textContent = step.title;
+                phaseDescription.textContent = step.description;
+                drawCharts(step.data, step.phaseLabel, phaseColors[step.phaseLabel.text]);
+                currentStep++;
+            } else {
+                nextBtn.textContent = 'Reiniciar';
+                currentStep = 0;
+            }
+        }
+
+        function init() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            updateStep();
+        }
+
+        window.addEventListener('resize', init);
+        nextBtn.addEventListener('click', updateStep);
+
+        init();
+    </script>
+</body>
+</html>
